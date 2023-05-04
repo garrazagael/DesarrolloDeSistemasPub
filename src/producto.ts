@@ -1,7 +1,7 @@
 import { registroPrecioxFecha } from "./registroPrecioxFecha";
 
-export class Producto{
-    id: Number;
+export class Producto {
+    id: Number; 
     nombre: String;
     precioxfecha: Array<registroPrecioxFecha>
 
@@ -26,7 +26,7 @@ export class Producto{
         this.nombre = nombre;
     }
 
-    public getPrecioxFecha(){
+    public getPrecioxFecha() {
         return this.getPrecioxFecha
     }
 }

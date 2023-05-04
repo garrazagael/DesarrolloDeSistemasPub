@@ -3,7 +3,7 @@ info:
   title: "TP1"
   version: "1.0.0"
 servers: 
-  - url:  "localhost:4250"
+  - url:  "http://localhost:4260"
 
 components:
   schemas:
@@ -56,6 +56,31 @@ paths:
               type: "array"
               items:
                 $ref: "#/components/schemas/producto"
+    post:
+      summary: Inserta la info de un nuevo Producto
+      requestBody:
+        description: Crear Producto
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                id:
+                  type: "number"
+                  example: 47
+                nombre:
+                  type: "string"
+                  example: "Toalla de tela"
+                precioXfecha:
+                  type: "array"
+                  items:
+                    $ref: "#/components/schemas/registroPrecioxFecha"
+        required: true
+      responses:
+        200:
+          description: El producto fue creado correctamente.
+        400:
+          description: ERROR FATAL
 
   "/productos/{id}":
     get:
@@ -87,7 +112,7 @@ paths:
       summary: "Cambiar información de producto"
       description: "Modifica los datos de un producto en específico. Todos los campos son requeridos."
       parameters:
-        - in: "path"
+        - in : "path"
           name: "id"
           schema:
               type: "number"
@@ -129,6 +154,44 @@ paths:
                 properties:
                   producto:
                     $ref: "#/components/schemas/producto"
+    delete:
+      summary: "Borrar el producto"
+      description: "Borra los datos de un producto en específico. Todos los campos son requeridos."
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+              type: "number"
+          required: true
+          description: "El ID del producto a borrar."
+
+      responses:
+        404:
+          description: "No hay producto con el ID especificado."
+          content:
+            application/json:
+              schema:
+                type: "string"
+                example: { err: "No existe un producto con el nombres ingesado" }
+
+        400:
+          description: "Alguno de los parámetros es incorrecto o está faltante."
+          content:
+            application/json:
+              schema:
+                type: "string"
+                example: { err: "Parámetros inválidos o no ingresados." }
+
+        200:
+          description: "El producto fue borrado con éxito."
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  producto:
+                    $ref: "#/components/schemas/producto"                
+    
 
   "/productos/{nombre}":
     get:
@@ -155,8 +218,3 @@ paths:
               schema:
                 type: "string"
                 example: { err: "No existe un producto con el nombres ingesado" }
-
-    
-      
-  
-            
